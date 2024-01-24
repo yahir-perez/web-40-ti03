@@ -1,5 +1,3 @@
-
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
@@ -32,21 +30,20 @@ export class ManageAccount {
             alert("Error al registrar: " + error.message);
       });
   }
-
   authenticate(email, password) {
     signInWithEmailAndPassword(auth, email, password)
-      .then((_) => {
+      .then(() => {
         window.location.href = "lobby.html";
-        // Mostrar alerta de inicio de sesión exitoso
+        // Alerta de inicio de sesión exitoso
         alert("Has iniciado sesión correctamente. Serás redirigido a la página principal.");
       })
       .catch((error) => {
-        console.error(error.message);
-                // Mostrar alerta de error de inicio de sesión
-                alert("Error al iniciar sesión: " + error.message);
+        console.error(error); // Registra el objeto de error completo en la consola
+        // Muestra un mensaje de error genérico para el inicio de sesión
+        alert("Error al iniciar sesión. Verifica tus credenciales e intenta nuevamente.");
       });
   }
-
+  
   signOut() {
     signOut(auth)
       .then((_) => {

@@ -1,7 +1,3 @@
-//ingresar en el head del login.html
-
-
-
 
 import { ManageAccount } from './firebaseconect.js';
 
