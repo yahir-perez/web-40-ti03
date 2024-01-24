@@ -27,9 +27,10 @@ export class ManageAccount {
       .catch((error) => {
         console.error(error.message);
             // Mostrar alerta de error de registro
-            alert("Error al registrar: " + error.message);
+            alert("Correo ya utilizado: ");
       });
   }
+
   authenticate(email, password) {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
