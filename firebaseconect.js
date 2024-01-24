@@ -18,19 +18,34 @@ const auth = getAuth();
 
 export class ManageAccount {
   register(email, password) {
+    // Check if the password meets the minimum length requirement
+    if (password.length < 6) {
+      // Display an alert if the password is too short
+      alert("La contraseña debe tener al menos 6 caracteres.");
+      return; // Stop the registration process
+    }
+  
+    // Create user with email and password
     createUserWithEmailAndPassword(auth, email, password)
-      .then((_) => {
+      .then((userCredential) => {
+        // Redirect to login page after successful registration
         window.location.href = "login.html";
-        // Mostrar alerta de registro exitoso
+        // Display successful registration alert
         alert("Registro exitoso. Serás redirigido a la página de inicio de sesión.");
       })
       .catch((error) => {
-        console.error(error.message);
-            // Mostrar alerta de error de registro
-            alert("Correo ya utilizado: ");
+        // Check if the error is due to an existing email
+        if (error.code === "auth/email-already-in-use") {
+          // Display alert for existing email
+          alert("Correo electrónico ya registrado. Intenta con otro.");
+        } else {
+          // Display generic error alert for other registration failures
+          console.error(error.message);
+          alert("Error en el registro: " + error.message);
+        }
       });
   }
-
+  
   authenticate(email, password) {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
@@ -47,7 +62,7 @@ export class ManageAccount {
   
   signOut() {
     signOut(auth)
-      .then((_) => {
+      .then(() => {
         window.location.href = "lobby.html";
       })
       .catch((error) => {
